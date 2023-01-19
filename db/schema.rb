@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_13_183826) do
-  create_table "abilities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2023_01_13_003156) do
+  create_table "abilities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "community_id"
     t.string "name"
     t.text "description"
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_183826) do
     t.index ["community_id"], name: "index_abilities_on_community_id"
   end
 
-  create_table "ability_queues", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "ability_queues", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "community_user_id"
     t.text "comment"
     t.boolean "completed"
@@ -234,6 +234,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_183826) do
     t.index ["user_id"], name: "index_error_logs_on_user_id"
   end
 
+  create_table "featured_images", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "header_text"
+    t.bigint "community_id"
+    t.bigint "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_id"], name: "index_featured_images_on_community_id"
+    t.index ["post_id"], name: "index_featured_images_on_post_id"
+  end
+
   create_table "flags", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.text "reason"
     t.datetime "created_at", precision: nil, null: false
@@ -334,7 +344,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_183826) do
     t.index ["post_id"], name: "index_pinned_links_on_post_id"
   end
 
-  create_table "post_flag_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "post_flag_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "community_id"
     t.string "name"
     t.text "description"
@@ -600,6 +610,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_183826) do
     t.index ["community_id"], name: "index_tag_sets_on_community_id"
   end
 
+  create_table "tag_synonyms", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_tag_synonyms_on_tag_id"
+  end
+
   create_table "tags", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
@@ -626,7 +644,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_183826) do
     t.index ["user_id"], name: "index_thread_followers_on_user_id"
   end
 
-  create_table "user_abilities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "user_abilities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "community_user_id"
     t.bigint "ability_id"
     t.boolean "is_suspended", default: false
@@ -741,6 +759,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_183826) do
   add_foreign_key "community_users", "users", column: "deleted_by_id"
   add_foreign_key "error_logs", "communities"
   add_foreign_key "error_logs", "users"
+  add_foreign_key "featured_images", "communities"
+  add_foreign_key "featured_images", "posts"
   add_foreign_key "flags", "communities"
   add_foreign_key "flags", "users", column: "escalated_by_id"
   add_foreign_key "micro_auth_apps", "users"
@@ -768,6 +788,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_183826) do
   add_foreign_key "suggested_edits", "posts"
   add_foreign_key "suggested_edits", "users"
   add_foreign_key "suggested_edits", "users", column: "decided_by_id"
+  add_foreign_key "tag_synonyms", "tags"
   add_foreign_key "tags", "communities"
   add_foreign_key "tags", "tags", column: "parent_id"
   add_foreign_key "thread_followers", "posts"

@@ -12,6 +12,11 @@
     <% end %>
   <% end %>
 
+  <% if @community.featured_image.present? %>
+    <div class="widget has-margin-4 is-tertiary">
+      <%= render @community.featured_image %>
+    </div>
+  <% end %>
 
   <% unless @community.is_fake %>
     <% if Rails.env.development? || @hot_questions.to_a.size > 0 || @pinned_links.to_a.size > 0 %>

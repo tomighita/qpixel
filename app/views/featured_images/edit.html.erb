@@ -1,0 +1,9 @@
+<h1>Editing featured image</h1>
+
+<%= render "form", featured_image: @featured_image %>
+
+<hr>
+<div class="">
+  <%= link_to "Delete", featured_image_path(@featured_image), method: :delete ,class: 'button is-danger is-filled' %>
+
+</div>

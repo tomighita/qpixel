@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @featured_image %>
+
+<div>
+  <%= link_to "Edit this featured image", edit_featured_image_path(@featured_image) %> |
+  <%= link_to "Back to featured images", featured_images_path %>
+
+  <%= button_to "Destroy this featured image", @featured_image, method: :delete %>
+</div>

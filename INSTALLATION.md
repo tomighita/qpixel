@@ -1,4 +1,4 @@
-# QPixel Installation
+fhea# QPixel Installation
 
 These instructions are for setting up a development instance of QPixel. QPixel is
 built with Ruby on Rails.

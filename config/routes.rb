@@ -288,6 +288,9 @@ Rails.application.routes.draw do
     get 'reports/posts',                   to: 'reports#posts_global', as: :global_posts_report
   end
 
+  # resources :featured_images, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :featured_images, only: [:new, :create, :edit, :update, :destroy]
+
   scope 'ca' do
     root                                   to: 'advertisement#index', as: :ads
     get 'codidact.png',                    to: 'advertisement#codidact', as: :codidact_ads
